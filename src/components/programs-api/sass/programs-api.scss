@@ -1,50 +1,66 @@
+.debug-program-id {
+  padding-bottom: 30px;
+}
 div.programs-container {
   width: 100%;
-  display: flex;
-  flex-direction: row;
   padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 30px 0 rgba(0,0,0,0.15);
+  height: 300px;
+  overflow-y: scroll;
 
-  background-color: #D2D2D2;
-
-  .column {
-    width: 20%;
-    &.seasons-column {
-      .row {
-        padding-bottom: 10px;
-        .season-checkbox {
-          margin-right: 10px;
-        }
-        .season-name {
-          font-size: 19px;
-          text-transform: capitalize;
-        }
-        .season-months {
-          padding-left: 25px;
-        }
-      }
-    }
-    &.types-column {
-      .row {
-        padding-bottom: 28px;
-        .type-checkbox {
-          margin-right: 10px;
-        }
-        .type-name {
-          font-size: 19px;
-          text-transform: capitalize;
-        }
-      }
-    }
+  .programs-header {
+    font-size: 28px;
+    padding-bottom: 30px;
+    font-family: 'Josefin Sans', Arial;
+    font-weight: bold;
   }
-  .accordions {
-    width: 60%;
-    .accordion {
-      .accordion-header {
-        text-transform: capitalize;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        padding: 15px;
+
+  .programs-columns {
+    display: flex;
+    flex-direction: row;
+    .column {
+      &.seasons-column {
+        width: 20%;
+        .row {
+          padding-bottom: 10px;
+          .season-checkbox {
+            margin-right: 10px;
+          }
+          .season-name {
+            font-size: 19px;
+            text-transform: capitalize;
+          }
+          .season-months {
+            padding-left: 25px;
+          }
+        }
+      }
+      &.types-column {
+        width: 25%;
+        font-family: 'Josefin Sans', Arial;
+        position: relative;
+        top: 0;
+
+        .sticky {
+          position: sticky;
+          top: 0;
+        }
+
+        .row {
+          padding-bottom: 28px;
+          .type-checkbox {
+            margin-right: 10px;
+          }
+          .type-name {
+            font-size: 19px;
+            text-transform: capitalize;
+          }
+        }
+      }
+      &.accordions {
+        width: 75%;
+        padding-left: 30px;
       }
     }
   }

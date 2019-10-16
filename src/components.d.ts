@@ -23,7 +23,12 @@ export namespace Components {
     */
     'middle': string;
   }
+  interface ProgramsAccordion {
+    'color': string;
+    'program': object;
+  }
   interface ProgramsApi {
+    'color': string;
     'organization': string;
   }
 }
@@ -37,6 +42,12 @@ declare global {
     new (): HTMLMyComponentElement;
   };
 
+  interface HTMLProgramsAccordionElement extends Components.ProgramsAccordion, HTMLStencilElement {}
+  var HTMLProgramsAccordionElement: {
+    prototype: HTMLProgramsAccordionElement;
+    new (): HTMLProgramsAccordionElement;
+  };
+
   interface HTMLProgramsApiElement extends Components.ProgramsApi, HTMLStencilElement {}
   var HTMLProgramsApiElement: {
     prototype: HTMLProgramsApiElement;
@@ -44,6 +55,7 @@ declare global {
   };
   interface HTMLElementTagNameMap {
     'my-component': HTMLMyComponentElement;
+    'programs-accordion': HTMLProgramsAccordionElement;
     'programs-api': HTMLProgramsApiElement;
   }
 }
@@ -63,12 +75,18 @@ declare namespace LocalJSX {
     */
     'middle'?: string;
   }
+  interface ProgramsAccordion extends JSXBase.HTMLAttributes<HTMLProgramsAccordionElement> {
+    'color'?: string;
+    'program'?: object;
+  }
   interface ProgramsApi extends JSXBase.HTMLAttributes<HTMLProgramsApiElement> {
+    'color'?: string;
     'organization'?: string;
   }
 
   interface IntrinsicElements {
     'my-component': MyComponent;
+    'programs-accordion': ProgramsAccordion;
     'programs-api': ProgramsApi;
   }
 }

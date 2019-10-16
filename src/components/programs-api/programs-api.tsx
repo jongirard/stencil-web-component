@@ -1,14 +1,13 @@
 import { Component, Prop, State, h } from '@stencil/core';
 import axios from 'axios';
-import { sortBy, filter } from 'lodash-es';
-import moment from 'moment';
+import { sortBy, filter, flattenDeep } from 'lodash-es';
 
-const SEASONS = [
-  { name: 'winter', months: ['Jan', 'Feb', 'Mar']},
-  { name: 'spring', months: ['Apr', 'May', 'Jun']},
-  { name: 'summer', months: ['Jul', 'Aug', 'Sep']},
-  { name: 'fall', months: ['Oct', 'Nov', 'Dec']},
-]
+// const SEASONS = [
+//   { name: 'winter', months: ['Jan', 'Feb', 'Mar']},
+//   { name: 'spring', months: ['Apr', 'May', 'Jun']},
+//   { name: 'summer', months: ['Jul', 'Aug', 'Sep']},
+//   { name: 'fall', months: ['Oct', 'Nov', 'Dec']},
+// ]
 
 @Component({
   tag: 'programs-api',
@@ -18,15 +17,16 @@ const SEASONS = [
 
 export class ProgramsApi {
   @Prop() organization: string;
+  @Prop() color: string;
 
   @State() programs: Array<object> = [];
   //Seasons
-  @State() winter: boolean = false;
-  @State() spring: boolean = false;
-  @State() summer: boolean = false;
-  @State() fall: boolean = false;
+  // @State() winter: boolean = false;
+  // @State() spring: boolean = false;
+  // @State() summer: boolean = false;
+  // @State() fall: boolean = false;
   //Program Types
-  @State() program_types: Array<object> = [];
+  @State() program_types: Array<any> = [];
 
   componentWillLoad() {
     this.fetchData();
@@ -36,38 +36,36 @@ export class ProgramsApi {
     axios.get(`https://wdq57lq1u6.execute-api.us-east-1.amazonaws.com/test/programs/public/${this.organization}`)
       .then((response) => {
         // handle success
-        //console.log(response);
         this.programs = response.data;
 
         this.setProgramTypes();
       });
     }
 
-  renderSeasonCheckboxes() {
-    return SEASONS.map((season) =>
-      <div class='row'>
-        <input
-          type="checkbox"
-          name={season.name}
-          class='season-checkbox'
-          value={season.name}
-          checked={this[season.name]}
-          onClick={() => this[season.name] = !this[season.name]}
-        />
-        <span class='season-name'>{season.name}</span>
-        <div class='season-months'>({season.months.join(', ')})</div>
-      </div>
-    )
-  }
+  // renderSeasonCheckboxes() {
+  //   return SEASONS.map((season: any) =>
+  //     <div class='row'>
+  //       <input
+  //         type="checkbox"
+  //         name={season.name}
+  //         class='season-checkbox'
+  //         value={season.name}
+  //         checked={this[season.name]}
+  //         onClick={() => this[season.name] = !this[season.name]}
+  //       />
+  //       <span class='season-name'>{season.name}</span>
+  //       <div class='season-months'>({season.months.join(', ')})</div>
+  //     </div>
+  //   )
+  // }
 
   setProgramTypes() {
     let types = [];
-    this.programs.map((program) => {
-      let snakeCase = program.type.toLowerCase().split(' ').join('_');
-      let alreadyAdded = !!filter(types, { name: snakeCase }).length;
+    this.programs.map((program: any) => {
+      let alreadyAdded = !!filter(types, { name: program.type }).length;
 
       if (alreadyAdded === false) {
-        types.push({ name: snakeCase, checked: false });
+        types.push({ name: program.type, checked: false });
       }
     })
 
@@ -75,7 +73,7 @@ export class ProgramsApi {
     this.program_types = sortedTypes;
   }
 
-  updateProgramTypes(type, key) {
+  updateProgramTypes(type: any, key: number) {
     let programTypesClone = [ ...this.program_types ];
 
     programTypesClone[key].checked = !type.checked;
@@ -84,65 +82,73 @@ export class ProgramsApi {
 
   renderProgramTypes() {
 
-    return this.program_types.map((type, key) =>
+    return this.program_types.map((type: any, key: number) =>
       <div class='row'>
         <input
           type="checkbox"
-          name={type.name}
+          name="program_type"
           class='type-checkbox'
           value={type.name}
           checked={this.program_types[key].checked}
           onClick={() => this.updateProgramTypes(type, key)}
         />
-        <span class='type-name'>{type.name.split('_').join(' ')}</span>
+        <span class='type-name'>{type.name}</span>
       </div>
     );
   }
 
   renderPrograms() {
-    return this.programs.map((program) =>
-      <div class='accordion'>
-        <div class='accordion-header'>
-          <div class='title'>{`${program.ages} ${program.division} ${program.program_description}`}</div>
-          <div class='dates'>Start - End</div>
-        </div>
-      </div>
-    )
+    let filteredResults = [];
+
+    // if (this.winter === true) {
+    //   filteredResults.push(filter(this.programs, (program) => { return program.season.indexOf('winter') >= 0}))
+    // }
+    // if (this.spring === true) {
+    //   filteredResults.push(filter(this.programs, (program) => { return program.season.indexOf('spring') >= 0}))
+    // }
+    // if (this.summer === true) {
+    //   filteredResults.push(filter(this.programs, (program) => { return program.season.indexOf('summer') >= 0}))
+    // }
+    // if (this.fall === true) {
+    //   filteredResults.push(filter(this.programs, (program) => { return program.season.indexOf('fall') >= 0}))
+    // }
+
+    this.program_types.forEach((type) => {
+      console.log('type', type)
+      if (type.checked === true) {
+        filteredResults.push(filter(this.programs, (program) => { return program.type === type.name }))
+      }
+    })
+
+    filteredResults = flattenDeep(filteredResults)
+
+    return filteredResults.map((program: any) => {
+      return (
+        <programs-accordion program={program} />
+      )
+    })
   }
 
   render() {
     console.log('fetched data in render', this.programs);
-    console.log('winter season state', this.winter);
-    console.log('spring season state', this.spring);
-    console.log('summer season state', this.summer);
-    console.log('fall season state', this.fall);
-
-    console.log('program types state', this.program_types);
-
-    //this.setProgramTypes()
-    //console.log('program types state', this.program_types);
 
     return (
       <div>
-        Hello, World! I'm {this.organization}
+        <div class='debug-program-id'>Program ID {this.organization}</div>
         <div class='programs-container'>
-          <div class='column seasons-column'>
-            {this.renderSeasonCheckboxes()}
-          </div>
-          <div class='column types-column'>
-          {this.renderProgramTypes()}
-          </div>
-          <div class='accordions'>
-          {this.renderPrograms()}
+          <div class='programs-columns'>
+            <div class='column types-column'>
+              <div class='sticky'>
+                <div class='programs-header' style={{color: this.color}}>Programs for you</div>
+                {this.renderProgramTypes()}
+                </div>
+              </div>
+            <div class='column accordions'>
+              {this.renderPrograms()}
+            </div>
           </div>
         </div>
       </div>
     )
-
-    // return this.programs.forEach((program) => {
-    //   return (
-    //     <div>{program.ages}</div>
-    //   )
-    // })
   }
 }

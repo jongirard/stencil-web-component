@@ -1,5 +1,6 @@
 import { Component, Prop, State, h } from '@stencil/core';
 import moment from 'moment';
+import {css} from 'emotion';
 
 @Component({
   tag: 'programs-accordion',
@@ -20,17 +21,23 @@ export class ProgramsAccordion {
     let start = moment(this.program.start_date).format('MMM D, YYYY');
     let end = moment(this.program.end_date).format('MMM D, YYYY');
 
+    const triggerStyle = css`
+      &:hover {
+        background-color: ${this.color} !important;
+      }
+    `
+
     return (
       <div class='accordion'>
         <div class='badger-accordion js-badger-accordion'>
           <div class='badger-accordion__header' onClick={() => this.toggleAccordion() }>
-            <button class={`badger-accordion__trigger js-badger-accordion-header ${this.active ? 'show' : ''}`}>
+            <button class={`badger-accordion__trigger js-badger-accordion-header ${triggerStyle} ${this.active ? 'show' : ''}`}>
               <div class="badger-accordion__trigger-title">
                 <div class='title'>
-                  {`${this.program.ages} ${this.program.division} ${this.program.program_description}`}
+                  {`${this.program.program_description} (${this.program.ages} ${this.program.division})`}
                 </div>
                 <div class='dates'>
-                  {start} - {end}
+                  {this.program.season}
                 </div>
               </div>
               <div class="badger-accordion__trigger-icon">
@@ -42,7 +49,7 @@ export class ProgramsAccordion {
               <span class='label'>Description:</span> {this.program.program_description}
 
               <div class='info-button'>
-                <a class='rounded-button' href="http://app.hoopstir.com">More Info</a>
+                <a class='rounded-button' href="http://app.hoopstir.com" target="_blank">More Info</a>
               </div>
             </div>
           </div>

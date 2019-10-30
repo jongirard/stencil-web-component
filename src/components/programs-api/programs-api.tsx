@@ -24,7 +24,7 @@ export class ProgramsApi {
 
   fetchData() {
     this.loading = true;
-    axios.get(`https://wdq57lq1u6.execute-api.us-east-1.amazonaws.com/test/programs/public/${this.organization}`)
+    axios.get(`https://gmde73l542.execute-api.us-east-1.amazonaws.com/prod/programs/public/${this.organization}`)
       .then((response) => {
         // handle success
         this.programs = response.data;
@@ -59,10 +59,10 @@ export class ProgramsApi {
 
     const checkboxStyles = css`
       &:hover + label:before {
-        background-color: ${this.color} !important;
+        background-color: #000 !important;
       }
       &:checked + label:before {
-        background-color: ${this.color} !important;
+        background-color: #000 !important;
       }
     `
 
@@ -77,7 +77,7 @@ export class ProgramsApi {
     return this.program_types.map((type: any, key: number) =>
       <div class='row'>
         <input
-          class={`styled-checkbox`}
+          class={`styled-checkbox ${checkboxStyles}`}
           name='program_type'
           type='checkbox'
           value={type.name}
@@ -116,15 +116,14 @@ export class ProgramsApi {
 
   render() {
     console.log('fetched data in render', this.programs);
-
+    // <div class='debug-program-id'>Program ID {this.organization}</div>
     return (
       <div>
-        <div class='debug-program-id'>Program ID {this.organization}</div>
         <div class='programs-container'>
           <div class='programs-columns'>
             <div class='column types-column'>
               <div class='sticky'>
-                <div class='programs-header' style={{color: this.color}}>Programs for you</div>
+                <div class='programs-header'>Programs for you</div>
                 {this.renderProgramTypes()}
                 </div>
               </div>

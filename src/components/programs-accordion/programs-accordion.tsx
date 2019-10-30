@@ -1,5 +1,4 @@
 import { Component, Prop, State, h } from '@stencil/core';
-import moment from 'moment';
 import {css} from 'emotion';
 
 @Component({
@@ -18,8 +17,8 @@ export class ProgramsAccordion {
   }
 
   render() {
-    let start = moment(this.program.start_date).format('MMM D, YYYY');
-    let end = moment(this.program.end_date).format('MMM D, YYYY');
+    // let start = moment(this.program.start_date).format('MMM D, YYYY');
+    // let end = moment(this.program.end_date).format('MMM D, YYYY');
 
     const triggerStyle = css`
       &:hover {
@@ -34,7 +33,7 @@ export class ProgramsAccordion {
             <button class={`badger-accordion__trigger js-badger-accordion-header ${triggerStyle} ${this.active ? 'show' : ''}`}>
               <div class="badger-accordion__trigger-title">
                 <div class='title'>
-                  {`${this.program.program_description} (${this.program.ages} ${this.program.division})`}
+                  {`${this.program.group_name} (${this.program.ages} ${this.program.division})`}
                 </div>
                 <div class='dates'>
                   {this.program.season}

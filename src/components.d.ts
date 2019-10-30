@@ -9,20 +9,6 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 
 
 export namespace Components {
-  interface MyComponent {
-    /**
-    * The first name
-    */
-    'first': string;
-    /**
-    * The last name
-    */
-    'last': string;
-    /**
-    * The middle name
-    */
-    'middle': string;
-  }
   interface ProgramsAccordion {
     'color': string;
     'program': object;
@@ -36,12 +22,6 @@ export namespace Components {
 declare global {
 
 
-  interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {}
-  var HTMLMyComponentElement: {
-    prototype: HTMLMyComponentElement;
-    new (): HTMLMyComponentElement;
-  };
-
   interface HTMLProgramsAccordionElement extends Components.ProgramsAccordion, HTMLStencilElement {}
   var HTMLProgramsAccordionElement: {
     prototype: HTMLProgramsAccordionElement;
@@ -54,27 +34,12 @@ declare global {
     new (): HTMLProgramsApiElement;
   };
   interface HTMLElementTagNameMap {
-    'my-component': HTMLMyComponentElement;
     'programs-accordion': HTMLProgramsAccordionElement;
     'programs-api': HTMLProgramsApiElement;
   }
 }
 
 declare namespace LocalJSX {
-  interface MyComponent extends JSXBase.HTMLAttributes<HTMLMyComponentElement> {
-    /**
-    * The first name
-    */
-    'first'?: string;
-    /**
-    * The last name
-    */
-    'last'?: string;
-    /**
-    * The middle name
-    */
-    'middle'?: string;
-  }
   interface ProgramsAccordion extends JSXBase.HTMLAttributes<HTMLProgramsAccordionElement> {
     'color'?: string;
     'program'?: object;
@@ -85,7 +50,6 @@ declare namespace LocalJSX {
   }
 
   interface IntrinsicElements {
-    'my-component': MyComponent;
     'programs-accordion': ProgramsAccordion;
     'programs-api': ProgramsApi;
   }

@@ -7,7 +7,7 @@ import {css} from 'emotion';
 })
 
 export class ProgramsAccordion {
-  @Prop() program: object;
+  @Prop() program: any;
   @Prop() color: string;
 
   @State() active: boolean = false;

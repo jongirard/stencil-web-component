@@ -2,11 +2,12 @@ import { Component, Prop, State, h } from '@stencil/core';
 import axios from 'axios';
 import { sortBy, filter, flattenDeep } from 'lodash-es';
 import {css} from 'emotion';
+import moment from 'moment';
 
 @Component({
   tag: 'programs-api',
   styleUrl: 'programs-api.css',
-  shadow: false
+  shadow: true
 })
 
 export class ProgramsApi {
@@ -32,6 +33,7 @@ export class ProgramsApi {
         this.loading = false;
         this.setProgramTypes();
       });
+      this.setProgramTypes();
     }
 
   setProgramTypes() {
@@ -91,11 +93,11 @@ export class ProgramsApi {
 
   renderPrograms() {
     let filteredResults = [];
+    const openPrograms = filter(this.programs, (program) => { return moment(program.registration_end_date).isAfter() === true })
 
     this.program_types.forEach((type) => {
-      console.log('type', type)
       if (type.checked === true) {
-        filteredResults.push(filter(this.programs, (program) => { return program.type === type.name }))
+        filteredResults.push(filter(openPrograms, (program) => { return program.type === type.name }))
       }
     })
 
@@ -115,10 +117,9 @@ export class ProgramsApi {
   }
 
   render() {
-    console.log('fetched data in render', this.programs);
     // <div class='debug-program-id'>Program ID {this.organization}</div>
     return (
-      <div>
+      <div class="programs--programs-api">
         <div class='programs-container'>
           <div class='programs-columns'>
             <div class='column types-column'>

@@ -11,11 +11,14 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 export namespace Components {
   interface ProgramsAccordion {
     'color': string;
+    'organization_id': string;
+    'organization_name': string;
     'program': any;
   }
   interface ProgramsApi {
     'color': string;
-    'organization': string;
+    'organization_id': string;
+    'organization_name': string;
   }
 }
 
@@ -42,11 +45,14 @@ declare global {
 declare namespace LocalJSX {
   interface ProgramsAccordion extends JSXBase.HTMLAttributes<HTMLProgramsAccordionElement> {
     'color'?: string;
+    'organization_id'?: string;
+    'organization_name'?: string;
     'program'?: any;
   }
   interface ProgramsApi extends JSXBase.HTMLAttributes<HTMLProgramsApiElement> {
     'color'?: string;
-    'organization'?: string;
+    'organization_id'?: string;
+    'organization_name'?: string;
   }
 
   interface IntrinsicElements {

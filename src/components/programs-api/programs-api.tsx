@@ -11,7 +11,8 @@ import moment from 'moment';
 })
 
 export class ProgramsApi {
-  @Prop() organization: string;
+  @Prop() organization_id: string;
+  @Prop() organization_name: string = "";
   @Prop() color: string;
 
   @State() programs: Array<object> = [];
@@ -25,7 +26,7 @@ export class ProgramsApi {
 
   fetchData() {
     this.loading = true;
-    axios.get(`https://gmde73l542.execute-api.us-east-1.amazonaws.com/prod/programs/public/${this.organization}`)
+    axios.get(`https://gmde73l542.execute-api.us-east-1.amazonaws.com/prod/programs/public/${this.organization_id}`)
       .then((response) => {
         // handle success
         this.programs = response.data;
@@ -111,13 +112,13 @@ export class ProgramsApi {
 
     return filteredResults.map((program: any) => {
       return (
-        <programs-accordion program={program} color={this.color} />
+        <programs-accordion program={program} organization_id={this.organization_id} organization_name={this.organization_name} color={this.color} />
       )
     })
   }
 
   render() {
-    // <div class='debug-program-id'>Program ID {this.organization}</div>
+    // <div class='debug-program-id'>Program ID {this.organization_id}</div>
     return (
       <div class="programs--programs-api">
         <div class='programs-container'>
@@ -125,6 +126,7 @@ export class ProgramsApi {
             <div class='column types-column'>
               <div class='sticky'>
                 <div class='programs-header'>Programs for you</div>
+                <div class='programs-header sub-header'>Program Type</div>
                 {this.renderProgramTypes()}
                 </div>
               </div>

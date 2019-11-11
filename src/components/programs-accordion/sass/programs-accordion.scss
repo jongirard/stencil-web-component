@@ -6,11 +6,21 @@ $grey: #6C7A89;
 $grey-light: #95A5A6;
 $blue: #2574A9;
 $dark-blue: #34495e;
+$mid-grey: #444444;
 $green: #16a085;
+$hoopstir-grey: #E2E2E2;
+$hoopstir-dark-grey: #8b8d94;
 
 // UNITS
 $spacing-unit: 40px;
 $half-spacing-unit: $spacing-unit / 2;
+
+//BREAKPOINTS
+$mobile: 768px;
+$tablet: 769px;
+$desktop: 1024px;
+$widescreen: 1216px;
+$full: 1408px;
 
 // BORDER
 $accordion-border: solid 2px $grey-light;
@@ -184,14 +194,14 @@ $transition-time: 0.2s;
 
 
   .badger-accordion {
-      box-shadow: 0 1px 10px rgba(0,0,0,.1), 0 1px 4px rgba(0,0,0,.1);
       border-radius: 4px;
       overflow: hidden;
+      border: 2px solid $hoopstir-grey;
   }
 
   .badger-accordion__header {
       &:not(:last-of-type) {
-          border-bottom: 1px solid #EFF1F0;
+
       }
   }
 
@@ -201,12 +211,13 @@ $transition-time: 0.2s;
       background-color: $white;
       border: 0;
       border-radius: 0px;
-      color: $dark-blue;
+      color: $mid-grey;
       display: flex;
-      font-family: 'Josefin Sans', Arial;
+      font-family: 'Roboto', sans-serif;
       font-size: 1.25rem;
+      font-weight: 500;
       line-height: 1;
-      padding: $half-spacing-unit;
+      padding: 14px 20px;
       text-align: left;
       transition: all ease-in-out $transition-time;
       width: 100%;
@@ -219,14 +230,14 @@ $transition-time: 0.2s;
               }
 
               &:after {
-                  transform: rotate(-45deg) translate3d(-13px, 14px, 0);
+                  transform: rotate(-45deg) translate3d(-12px, 15px, 0);
               }
           }
       }
 
       &:focus,
       &:hover {
-          background-color: $green;
+          background-color: $hoopstir-dark-grey;
           cursor: pointer;
           outline: none;
 
@@ -248,17 +259,21 @@ $transition-time: 0.2s;
 
 
   .badger-accordion__trigger-title {
-      font-size: 1.2rem;
-      transition: ease-in-out 0.3s;
+    font-size: 1.2rem;
+    transition: ease-in-out 0.3s;
 
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 
-      .dates {
-        padding-right: 15px;
-        text-transform: capitalize;
-      }
+    .dates {
+      padding-right: 15px;
+      text-transform: capitalize;
+    }
+
+    @media screen and (max-width: $mobile) {
+      font-size: 1.1rem;
+    }
   }
 
   .badger-accordion__trigger-icon {
@@ -267,22 +282,22 @@ $transition-time: 0.2s;
       margin-left: auto;
       position: relative;
       transition: all ease-in-out $transition-time;
-      width: $spacing-unit;
+      width: 31px;
 
       &:after,
       &:before {
-          background-color: #333;
+          background-color: $hoopstir-grey;
           content: "";
           height: 3px;
           position: absolute;
           top: 5px;
           transition: all ease-in-out (($transition-time / 3) * 2);
-          width: 20px;
+          width: 15px;
       }
 
       &:before {
           left: 10px;
-          transform: rotate(45deg) translate3d(8px, 22px, 0);
+          transform: rotate(45deg) translate3d(9px, 21px, 0);
           transform-origin: 100%;
       }
 
@@ -294,7 +309,7 @@ $transition-time: 0.2s;
   }
 
   .badger-accordion__panel {
-      background-color: $off-white;
+      background-color: $white;
       position: relative;
 
       &:after {
@@ -310,7 +325,19 @@ $transition-time: 0.2s;
 
   .badger-accordion__panel-inner {
       padding: $half-spacing-unit $half-spacing-unit $spacing-unit;
-      font-family: 'roboto';
+      font-family: 'Roboto', sans-serif;
+      line-height: 25px;
+      font-size: 15px;
+
+      .label {
+        font-weight: bold;
+      }
+
+      .panel-section {
+        &.padding-bottom {
+          padding-bottom: 20px;
+        }
+      }
   }
 
 
@@ -327,7 +354,6 @@ $transition-time: 0.2s;
       padding-bottom: 20px;
 
       .badger-accordion__panel {
-      max-height: 75vh;
       overflow: hidden;
       font-family: sans-serif;
 
@@ -347,8 +373,9 @@ $transition-time: 0.2s;
           text-decoration: none;
           text-transform: uppercase;
           border-radius: 6px;
-          font-family: sans-serif;
+          font-family: 'Roboto', sans-serif;
           font-size: 13px;
+          font-weight: 500;
         }
       }
     }

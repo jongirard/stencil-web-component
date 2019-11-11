@@ -1,5 +1,6 @@
 import { Component, Prop, State, h } from '@stencil/core';
 import {css} from 'emotion';
+import moment from 'moment';
 
 @Component({
   tag: 'programs-accordion',
@@ -9,6 +10,8 @@ import {css} from 'emotion';
 export class ProgramsAccordion {
   @Prop() program: any;
   @Prop() color: string;
+  @Prop() organization_id: string;
+  @Prop() organization_name: string;
 
   @State() active: boolean = false;
 
@@ -17,14 +20,27 @@ export class ProgramsAccordion {
   }
 
   render() {
-    // let start = moment(this.program.start_date).format('MMM D, YYYY');
-    // let end = moment(this.program.end_date).format('MMM D, YYYY');
+    let program_start = moment(this.program.start_date).format('MMM D, YYYY');
+    let program_end = moment(this.program.end_date).format('MMM D, YYYY');
+    let registration_start = moment(this.program.registration_start_date).format('MMM D, YYYY');
+    let registration_end = moment(this.program.registration_end_date).format('MMM D, YYYY');
 
     const triggerStyle = css`
       &:hover {
         background-color: ${this.color} !important;
       }
     `
+
+    const infoLink = () => {
+      let host = 'https://app.hoopstir.com/login';
+      let organization_id = this.organization_id;
+      let organization_name = encodeURIComponent(this.organization_name);
+      let program_name = encodeURIComponent(this.program.group_name);
+
+      let formattedLink = `${host}?organization_id=${organization_id}&organization_name=${organization_name}&redirectedUser=true&search=${program_name}`;
+
+      return formattedLink;
+    }
 
     return (
       <div class='accordion'>
@@ -45,10 +61,18 @@ export class ProgramsAccordion {
           </div>
           <div class={`badger-accordion__panel js-badger-accordion-panel ${this.active ? 'open' : '-ba-is-hidden'}`}>
             <div class="badger-accordion__panel-inner text-module js-badger-accordion-panel-inner">
-              <span class='label'>Description:</span> {this.program.program_description}
+              <div class="panel-section padding-bottom">
+                <span class='label'>Dates:</span> {program_start} - {program_end}
+              </div>
+              <div class="panel-section padding-bottom">
+                <span class='label'>Registration:</span> {registration_start} - {registration_end}
+              </div>
+              <div class="panel-section">
+                <span class='label'>Details:</span> {this.program.program_description}
+              </div>
 
               <div class='info-button'>
-                <a class='rounded-button' href="http://app.hoopstir.com" target="_blank">More Info</a>
+                <a class='rounded-button' href={infoLink()} target="_blank">More Info</a>
               </div>
             </div>
           </div>

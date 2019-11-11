@@ -7,10 +7,12 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type     | Default     |
-| --------- | --------- | ----------- | -------- | ----------- |
-| `color`   | `color`   |             | `string` | `undefined` |
-| `program` | `program` |             | `any`    | `undefined` |
+| Property            | Attribute           | Description | Type     | Default     |
+| ------------------- | ------------------- | ----------- | -------- | ----------- |
+| `color`             | `color`             |             | `string` | `undefined` |
+| `organization_id`   | `organization_id`   |             | `string` | `undefined` |
+| `organization_name` | `organization_name` |             | `string` | `undefined` |
+| `program`           | `program`           |             | `any`    | `undefined` |
 
 
 ## Dependencies

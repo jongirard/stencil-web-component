@@ -36,8 +36,9 @@ export class ProgramsAccordion {
       let organization_id = this.organization_id;
       let organization_name = encodeURIComponent(this.organization_name);
       let program_name = encodeURIComponent(this.program.group_name);
+      let program_ages = encodeURIComponent(this.program.ages);
 
-      let formattedLink = `${host}?organization_id=${organization_id}&organization_name=${organization_name}&redirectedUser=true&search=${program_name}`;
+      let formattedLink = `${host}?organization_id=${organization_id}&organization_name=${organization_name}&redirectedUser=true&search=${program_name}%2C${program_ages}`;
 
       return formattedLink;
     }

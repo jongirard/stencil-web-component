@@ -1,6 +1,6 @@
 import { Component, Prop, State, h } from '@stencil/core';
 import axios from 'axios';
-import { sortBy, filter, flattenDeep } from 'lodash-es';
+import { orderBy, filter, flattenDeep } from 'lodash-es';
 import {css} from 'emotion';
 import moment from 'moment';
 
@@ -47,7 +47,7 @@ export class ProgramsApi {
       }
     })
 
-    const sortedTypes = sortBy(types, ['name'])
+    const sortedTypes = orderBy(types, ['name'], ['desc'])
     this.program_types = sortedTypes;
   }
 
@@ -87,7 +87,7 @@ export class ProgramsApi {
           checked={this.program_types[key].checked}
           onClick={() => this.updateProgramTypes(type, key)}
         />
-        <label>{type.name}</label>
+        <label onClick={() => this.updateProgramTypes(type, key)}>{type.name}</label>
       </div>
     );
   }

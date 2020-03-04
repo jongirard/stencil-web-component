@@ -120,14 +120,17 @@ export class ProgramsApi {
   render() {
     // <div class='debug-program-id'>Program ID {this.organization_id}</div>
     return (
-      <div class="programs--programs-api">
+      <div class="programs--programs-api" id="programs-api-component">
         <div class='programs-container'>
           <div class='programs-columns'>
             <div class='column types-column'>
               <div class='sticky'>
-                <div class='programs-header'>Programs for you</div>
-                <div class='programs-header sub-header'>Program Type</div>
-                {this.renderProgramTypes()}
+                <div class='programs-header-type-wrapper'>
+                  <div class='programs-header sub-header'>Program Type</div>
+                    <div class='programs-type'>
+                      {this.renderProgramTypes()}
+                    </div>
+                  </div>
                 </div>
               </div>
             <div class='column accordions'>

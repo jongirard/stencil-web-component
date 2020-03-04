@@ -1,5 +1,5 @@
 import { Component, Prop, State, h } from '@stencil/core';
-import {css} from 'emotion';
+import {css, injectGlobal} from 'emotion';
 import moment from 'moment';
 
 @Component({
@@ -25,9 +25,9 @@ export class ProgramsAccordion {
     let registration_start = moment(this.program.registration_start_date).format('MMM D, YYYY');
     let registration_end = moment(this.program.registration_end_date).format('MMM D, YYYY');
 
-    const triggerStyle = css`
-      &:hover {
-        background-color: ${this.color} !important;
+    injectGlobal`
+      :root {
+        --main-bg-color: ${this.color};
       }
     `
 
@@ -47,7 +47,7 @@ export class ProgramsAccordion {
       <div class='accordion'>
         <div class='badger-accordion js-badger-accordion'>
           <div class='badger-accordion__header' onClick={() => this.toggleAccordion() }>
-            <button class={`badger-accordion__trigger js-badger-accordion-header ${triggerStyle} ${this.active ? 'show' : ''}`}>
+            <button class={`badger-accordion__trigger js-badger-accordion-header ${this.active ? 'show' : ''}`}>
               <div class="badger-accordion__trigger-title">
                 <div class='title'>
                   {`${this.program.group_name} (${this.program.ages} ${this.program.division})`}

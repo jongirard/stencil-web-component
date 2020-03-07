@@ -1,7 +1,7 @@
 import { Component, Prop, State, h } from '@stencil/core';
 import axios from 'axios';
 import { orderBy, filter, flattenDeep } from 'lodash-es';
-import {css} from 'emotion';
+import { css, injectGlobal } from 'emotion';
 import moment from 'moment';
 
 @Component({
@@ -14,6 +14,9 @@ export class ProgramsApi {
   @Prop() organization_id: string;
   @Prop() organization_name: string = "";
   @Prop() color: string;
+  @Prop() enrol_button_color: string;
+  @Prop() checkbox_color: string;
+  @Prop() programs_height: string;
 
   @State() programs: Array<object> = [];
   //Program Types
@@ -112,13 +115,23 @@ export class ProgramsApi {
 
     return filteredResults.map((program: any) => {
       return (
-        <programs-accordion program={program} organization_id={this.organization_id} organization_name={this.organization_name} color={this.color} />
+        <programs-accordion program={program} organization_id={this.organization_id} organization_name={this.organization_name} color={this.color} enrol_button_color={this.enrol_button_color} />
       )
     })
   }
 
   render() {
     // <div class='debug-program-id'>Program ID {this.organization_id}</div>
+
+    injectGlobal`
+      :root {
+        --header-hover-color: ${this.color ? this.color : '#8b8d94'};
+        --enrol-button-color: ${this.enrol_button_color ? this.enrol_button_color : '#000'};
+        --checkbox-color: ${this.checkbox_color ? this.checkbox_color : '#000'};
+        --programs-height: ${this.programs_height ? this.programs_height : '350px'};
+      }
+    `
+
     return (
       <div class="programs--programs-api" id="programs-api-component">
         <div class='programs-container'>

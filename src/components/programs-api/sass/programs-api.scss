@@ -12,7 +12,7 @@ $full: 1408px;
   div.programs-container {
     width: 100%;
     padding: 20px;
-    height: 350px;
+    height: var(--programs-height);
     overflow-y: scroll;
 
     @media screen and (max-width: $mobile) {
@@ -184,11 +184,16 @@ $full: 1408px;
       height: 20px;
       background: #f9f3f3;
       border: 1px solid #cccccc;
+
+      @media screen and (max-width: $mobile) {
+        width: 15px;
+        height: 15px;
+      }
     }
 
     // Box hover
     &:hover + label:before {
-      background: #f35429;
+      background: var(--checkbox-color);
     }
 
     // Box focus
@@ -198,7 +203,7 @@ $full: 1408px;
 
     // Box checked
     &:checked + label:before {
-      background: #f35429;
+      background: var(--checkbox-color);
     }
 
     // Disabled state label.
@@ -230,6 +235,11 @@ $full: 1408px;
         4px -6px 0 white,
         4px -8px 0 white;
       transform: rotate(45deg);
+
+      @media screen and (max-width: $mobile) {
+        left: 3px;
+        top: 8px;
+      }
     }
   }
 

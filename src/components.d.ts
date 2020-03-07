@@ -11,14 +11,18 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 export namespace Components {
   interface ProgramsAccordion {
     'color': string;
+    'enrol_button_color': string;
     'organization_id': string;
     'organization_name': string;
     'program': any;
   }
   interface ProgramsApi {
+    'checkbox_color': string;
     'color': string;
+    'enrol_button_color': string;
     'organization_id': string;
     'organization_name': string;
+    'programs_height': string;
   }
 }
 
@@ -45,14 +49,18 @@ declare global {
 declare namespace LocalJSX {
   interface ProgramsAccordion extends JSXBase.HTMLAttributes<HTMLProgramsAccordionElement> {
     'color'?: string;
+    'enrol_button_color'?: string;
     'organization_id'?: string;
     'organization_name'?: string;
     'program'?: any;
   }
   interface ProgramsApi extends JSXBase.HTMLAttributes<HTMLProgramsApiElement> {
+    'checkbox_color'?: string;
     'color'?: string;
+    'enrol_button_color'?: string;
     'organization_id'?: string;
     'organization_name'?: string;
+    'programs_height'?: string;
   }
 
   interface IntrinsicElements {

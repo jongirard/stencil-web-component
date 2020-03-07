@@ -1,5 +1,4 @@
 import { Component, Prop, State, h } from '@stencil/core';
-import {css, injectGlobal} from 'emotion';
 import moment from 'moment';
 
 @Component({
@@ -10,6 +9,7 @@ import moment from 'moment';
 export class ProgramsAccordion {
   @Prop() program: any;
   @Prop() color: string;
+  @Prop() enrol_button_color: string;
   @Prop() organization_id: string;
   @Prop() organization_name: string;
 
@@ -25,12 +25,6 @@ export class ProgramsAccordion {
     let registration_start = moment(this.program.registration_start_date).format('MMM D, YYYY');
     let registration_end = moment(this.program.registration_end_date).format('MMM D, YYYY');
 
-    injectGlobal`
-      :root {
-        --main-bg-color: ${this.color};
-      }
-    `
-
     const infoLink = () => {
       let host = 'https://app.hoopstir.com/login';
       let organization_id = this.organization_id;
@@ -38,7 +32,13 @@ export class ProgramsAccordion {
       let program_name = encodeURIComponent(this.program.group_name);
       let program_ages = encodeURIComponent(this.program.ages);
 
-      let formattedLink = `${host}?organization_id=${organization_id}&organization_name=${organization_name}&redirectedUser=true&search=${program_name}%2C${program_ages}`;
+      let formattedLink;
+
+      if (this.program.type === "External League") {
+        formattedLink = `${host}?organization_id=${organization_id}&organization_name=${organization_name}&redirectedUser=true&search=${program_name}%2C${program_ages}&extLeague=true`;
+      } else {
+        formattedLink = `${host}?organization_id=${organization_id}&organization_name=${organization_name}&redirectedUser=true&search=${program_name}%2C${program_ages}`;
+      }
 
       return formattedLink;
     }
@@ -50,7 +50,10 @@ export class ProgramsAccordion {
             <button class={`badger-accordion__trigger js-badger-accordion-header ${this.active ? 'show' : ''}`}>
               <div class="badger-accordion__trigger-title">
                 <div class='title'>
-                  {`${this.program.group_name} (${this.program.ages} ${this.program.division})`}
+                  {`${this.program.group_name}`}
+                  <div class="row sub-details">
+                    {this.program.ages} {this.program.division}
+                  </div>
                 </div>
                 <div class='dates'>
                   {this.program.season}
@@ -68,7 +71,7 @@ export class ProgramsAccordion {
               <div class="panel-section padding-bottom">
                 <span class='label'>Registration:</span> {registration_start} - {registration_end}
               </div>
-              <div class="panel-section">
+              <div class="panel-section details">
                 <span class='label'>Details:</span> {this.program.program_description}
               </div>
 

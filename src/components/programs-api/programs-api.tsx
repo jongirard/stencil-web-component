@@ -108,7 +108,15 @@ export class ProgramsApi {
 
     this.program_types.forEach((type) => {
       if (type.checked === true) {
-        filteredResults.push(filter(openPrograms, (program) => { return program.type === type.name }))
+        filteredResults.push(
+          filter(
+            openPrograms,
+            (program) => {
+              let program_type = program.type.toLowerCase();
+              return program_type === type.name
+            }
+          )
+        )
       }
     })
 

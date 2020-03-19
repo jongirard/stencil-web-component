@@ -15,6 +15,7 @@
 | `organization_id`    | `organization_id`    |             | `string` | `undefined` |
 | `organization_name`  | `organization_name`  |             | `string` | `""`        |
 | `programs_height`    | `programs_height`    |             | `string` | `undefined` |
+| `selected_options`   | `selected_options`   |             | `string` | `undefined` |
 
 
 ## Dependencies

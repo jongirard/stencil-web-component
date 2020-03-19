@@ -1,6 +1,6 @@
 import { Component, Prop, State, h } from '@stencil/core';
 import axios from 'axios';
-import { orderBy, filter, flattenDeep } from 'lodash-es';
+import { orderBy, filter, flattenDeep, uniqBy } from 'lodash-es';
 import { css, injectGlobal } from 'emotion';
 import moment from 'moment';
 
@@ -17,6 +17,7 @@ export class ProgramsApi {
   @Prop() enrol_button_color: string;
   @Prop() checkbox_color: string;
   @Prop() programs_height: string;
+  @Prop() selected_options: string;
 
   @State() programs: Array<object> = [];
   //Program Types
@@ -41,17 +42,23 @@ export class ProgramsApi {
     }
 
   setProgramTypes() {
+    const json_options = JSON.parse(this.selected_options);
     let types = [];
-    this.programs.map((program: any) => {
-      let alreadyAdded = !!filter(types, { name: program.type }).length;
 
-      if (alreadyAdded === false) {
-        types.push({ name: program.type, checked: false });
-      }
+    this.programs.map((program: any) => {
+      let type = program.type.toLowerCase();
+      json_options.forEach((option: any) => {
+        let name = option.name.toLowerCase();
+        if (type === name) {
+          types.push({ name: option.name, checked: true });
+        }
+      });
+      types.push({ name: type, checked: false });
     })
 
-    const sortedTypes = orderBy(types, ['name'], ['desc'])
-    this.program_types = sortedTypes;
+    const sortedTypes = orderBy(types, ['name'], ['asc'])
+    const uniqueTypes = uniqBy(sortedTypes, 'name');
+    this.program_types = uniqueTypes;
   }
 
   updateProgramTypes(type: any, key: number) {

@@ -23,6 +23,7 @@ export namespace Components {
     'organization_id': string;
     'organization_name': string;
     'programs_height': string;
+    'selected_options': string;
   }
 }
 
@@ -61,6 +62,7 @@ declare namespace LocalJSX {
     'organization_id'?: string;
     'organization_name'?: string;
     'programs_height'?: string;
+    'selected_options'?: string;
   }
 
   interface IntrinsicElements {

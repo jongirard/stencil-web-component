@@ -42,7 +42,7 @@ export class ProgramsApi {
     }
 
   setProgramTypes() {
-    const json_options = JSON.parse(this.selected_options);
+    const json_options = this.selected_options ? JSON.parse(this.selected_options) : [];
     let types = [];
 
     this.programs.map((program: any) => {
